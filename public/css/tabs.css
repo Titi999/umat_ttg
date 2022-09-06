@@ -1,0 +1,81 @@
+.tabs{
+    z-index: 100;
+}
+
+.filter-item {
+    display: none;
+}
+.filter-item.one {
+    display: block;
+}
+.nav {
+    margin: 40px 0;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    
+}
+.nav .nav-item {
+    margin-right: 30px;
+}
+.nav .nav-item:last-child {
+    margin-right: 0;
+}
+.nav .nav-item .nav-link {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 10px;
+    color: #444;
+    cursor: pointer;
+    background-color: #d8d8d8;
+    list-style: none;
+}
+.nav .nav-item.active .nav-link {
+    background-color: #0A2558;
+    color: white;
+   
+}
+.text {
+    color: #444;
+    text-align: justify;
+    font-size: 16px;
+}
+li{
+    list-style: none;
+    z-index: 100;
+}
+.nav-item:hover{
+    background-color: #0A2558;
+    color: white;
+}
+
+
+.download #btnExport{
+    z-index: 100;
+}
+
+ .download #btnExport{
+   cursor: pointer;
+   background-color: #0A2558;
+    color: white;
+    width: 175px;
+    height: 50px;
+    border-radius: 5px;
+    border: 0;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.download #btnExport:hover{
+    background-color: white;
+     color: black;
+ }
+.download{
+    z-index: 80;
+    position: relative;
+    text-align: center;
+}

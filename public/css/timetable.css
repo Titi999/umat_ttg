@@ -1,0 +1,81 @@
+h1 {
+    text-align: center;
+    color: black;
+  }
+  
+  .myTimetable {
+    width:100%;
+    border-collapse: collapse;
+    table-layout: auto;
+    overflow-x: scroll;
+  }
+  
+  .myTimetable thead{
+    color: black;
+  }
+  
+  .myTimetable tbody {
+    background-color: #AAAAFF;
+  }
+  
+  .myTimetable td {
+    border: 1px solid black;
+    text-align: center;
+  }
+  .myTimetable tbody tr td:first-child {
+    background-color: #0A2558;
+    font-weight: bold;
+    color: white;
+  }
+  
+  .break, .lunch {
+    background-color: #FF0066 !important;
+    font-style: italic;
+  }
+  
+  .subject {
+    font-size: 12px;
+    margin-bottom:4px;
+  }
+  
+  .room {
+    font-size: 10px;
+    font-style: italic;
+  }
+
+  .red{
+    background-color: #e05260;
+  }
+
+  .yellow{
+    background-color: #ffc233;
+  }
+
+  .green{
+    background-color: #2BD47D;
+  }
+  
+  .blue{
+    background-color: #66b0ff;
+  }
+
+  .redlike{
+    background-color: #f7d4d7;
+  }
+
+  .yellowlike{
+    background-color: #ffe8b3;
+  }
+
+  .greenlike{
+    background-color: #C0F2D8;
+  }
+
+  .bluelike{
+    background-color: #cce5ff;
+  }
+
+  .blueish{
+    background-color: #2697FF;
+  }
+  
