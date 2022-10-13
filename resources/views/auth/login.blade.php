@@ -53,6 +53,7 @@
                             {{ Session::get('success') }}
                         </div>
                         @endif
+                        
 
                         @if(Session::get('fail'))
                         <div class="alert-danger">

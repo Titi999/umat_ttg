@@ -8,6 +8,7 @@ use App\Models\Admin;
 use App\Models\Classes;
 use Illuminate\Support\Facades\DB;
 use App\Models\Lecturer;
+use App\Models\Halls;
 class CourseController extends Controller
 {
     /**
@@ -25,11 +26,14 @@ class CourseController extends Controller
         $lists = Lecturer::all();
         $courses = Course::all();
         $classes = Classes::all();
+        $classes = Classes::all();
+        $halls = Halls::all();
     
-        return view('admin.courses', $data, compact('lists','courses', 'classes'));
+        return view('admin.courses', $data, compact('lists','courses', 'classes', 'halls'));
     }
 
     function addCourse(Request $request){
+        //dd($request->input('preferred_hall'));
         if(($request->input('combined')) == "Yes"){
             $class = $request->input('class')." & ".$request->input('cclass');
             $combined = "Yes";
@@ -46,7 +50,8 @@ class CourseController extends Controller
             'periods'=>$request->input('creditHours'),
             'combined_periods'=>$request->input('combinedPeriods'),
             'lecturer'=>$request->input('lecturer'),
-            'semester'=>$request->input('semester')
+            'semester'=>$request->input('semester'),
+            'preferred_hall'=>$request->input('preferred_hall')
         ]);
 
         if($query){

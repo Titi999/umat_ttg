@@ -88,7 +88,7 @@ $lists = Halls::all();
         <i class='bx bx-search' ></i>
       </div>
       <div class="profile-details">
-        <img src="{{ URL::asset('images/pic-person-01.jpg') }}" alt="">
+      <img src="{{ URL::asset('storage/images/'.$LoggedUserInfo['profile_img']) }}" alt="">
         <span class="admin_name">{{ $LoggedUserInfo['name'] }}</span>
         <i class='bx bx-chevron-down' ></i>
       </div>
@@ -108,7 +108,15 @@ $lists = Halls::all();
                 {{ Session::get('fail') }}
               </div>
             @endif
-            
+            @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
             <!-- <span class="blurb-tagline">and won't take longer than a couple of seconds.</span> -->
             <form class="hallsform signup-form" action="{{ route('admin.edit') }}" method="post">
               @csrf

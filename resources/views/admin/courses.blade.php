@@ -113,6 +113,13 @@ $courses = Course::all();
               <input class="hallsInput" id="signup-name" type="text" name="name" autocomplete="off" required/>
               <label class="hallsLabel" for="signup-email">Code</label>
               <input class="hallsInput" id="signup-email" type="number" name="code" autocomplete="off" min="100" max="999" required/>
+              <label class="hallsLabel" for="signup-email">Preferred Lecture Halls</label>
+              <select id="status" name="preferred_hall">
+                  <option>Select Lecture Hall</option>
+                  @foreach($halls as $hall)
+                <option value="{{ $hall->name }}">{{ $hall->name }}</option>
+              @endforeach
+              </select>
               <h4>Combined Course?</h4>
               <input type="checkbox" hidden="hidden" id="combined" onclick="validate()" value="No" name="combined">
               <label class="switch" for="combined"></label><br><br>
@@ -209,7 +216,7 @@ $courses = Course::all();
                 </td> -->
                 </td>
                 <td class="table-row__td" style="z-index: 100">
-                <a href="editCourse/{{ $course->id }}">
+                <a href="editCourse/{{ $course->id }}" onclick="javascript: return confirm('Are you sure you want to EDIT this record?');">
                   <svg  version="1.1" class="table-row__edit" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512.001 512.001" style="enable-background:new 0 0 512.001 512.001;" xml:space="preserve" data-toggle="tooltip" data-placement="bottom" title="Edit">
                       <g>	<g>		
                       <path d="M496.063,62.299l-46.396-46.4c-21.2-21.199-55.69-21.198-76.888,0l-18.16,18.161l123.284,123.294l18.16-18.161    C517.311,117.944,517.314,83.55,496.063,62.299z" style="fill: rgb(1, 185, 209);"></path>	

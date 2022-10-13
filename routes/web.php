@@ -8,6 +8,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\GeneratorController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ClassesController;
+use App\Http\Controllers\ExamsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +42,7 @@ Route::group(['middleware'=>['AuthCheck']],function(){
 
     Route::get('/admin/halls', [HallsCrud::class, 'index'])->name('admin.halls');
     Route::post('admin/add', [HallsCrud::class, 'add']);
-    Route::get('/admin/delete/{id}', [HallsCrud::class, 'destroy'])->name('admin.delete');
+    Route::get('/admin/deleteHalls/{id}', [HallsCrud::class, 'destroy'])->name('admin.delete');
     Route::get('/admin/editHalls/{id}', [HallsCrud::class, 'editPage'])->name('admin.editHalls');
     Route::post('/admin/edit', [HallsCrud::class, 'updateHalls'])->name('admin.edit');
 
@@ -62,7 +63,9 @@ Route::group(['middleware'=>['AuthCheck']],function(){
     Route::get('/admin/deleteClass/{id}', [ClassesController::class, 'destroy'])->name('admin.deleteClass');
     Route::get('/admin/editClass/{id}', [ClassesController::class, 'editPage'])->name('admin.editClass');
     Route::post('/admin/editCla', [ClassesController::class, 'updateClass'])->name('admin.editCla');
-
+    
     Route::get('/admin/generator', [GeneratorController::class, 'generator'])->name('admin.generator');
     Route::post('/admin/generateTimetable', [GeneratorController::class, 'generateTimetable'])->name('generateTimetable');
+
+    Route::get('/admin/exams', [ExamsController::class, 'index'])->name('admin.exams');
 });

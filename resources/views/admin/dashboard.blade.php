@@ -26,10 +26,16 @@
           </a>
         </li>
         <li>
-          <a href="{{ route('admin.generator')}}">
-            
+          <a href="{{ route('admin.generator')}}"> 
           <i class='bx bx-loader bx-spin' ></i>
             <span class="links_name">Generator</span>
+          </a>
+        </li>
+        
+        <li>
+          <a href="{{ route('admin.exams')}}"> 
+          <i class='bx bx-pulse'></i>
+            <span class="links_name">Exams</span>
           </a>
         </li>
         <li>

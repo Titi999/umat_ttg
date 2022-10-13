@@ -26,7 +26,7 @@ class HallsCrud extends Controller
         return back()->with('success', 'Lecture Hall successfully deleted');
         }
         else{
-            return back()->with('error', 'Oopa!!! Someting went wrong');
+            return back()->with('error', 'Oops!!! Someting went wrong');
         }
         // $query = DB::delete('delete from halls where id = ?',[$id]);
         // if($query){
@@ -71,6 +71,12 @@ class HallsCrud extends Controller
     }
 
     public function updateHalls(Request $req){
+        $req -> validate([
+            'name' => 'required|unique:halls',
+            'capacity' => 'required',
+            'amenities' => 'required',
+            'status' => 'required'
+            ]);
         $data = Halls::find($req->id);
         $data->name=$req->name;
         $data->department=$req->department;

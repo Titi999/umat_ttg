@@ -14,6 +14,7 @@ class Course extends Model
          'class',
          'credit_hours',
          'lecturer',
-         'semester'
+         'semester',
+         'preferred_hall'
     ];
 }

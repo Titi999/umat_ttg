@@ -56,16 +56,24 @@ class GeneratorController extends Controller
         {  set_time_limit(0);
             $periods = $courses[$i]->periods;
             $randomCourse = $courses[$i]->name;
+            $preferedHall = $courses[$i]->preferred_hall;
             $lecturer = $courses[$i] -> lecturer;
             $class = $courses[$i]->class;
+            $loop = 0;
             if(($courses[$i]->combined) == "No"){
             $capacity =  DB::table('classes')->where('name', $class)->first()->no_of_students;
             do{
+                $loop++;
                 $clash = true;
                 $time = $timearray[array_rand($timearray)];
                 $day = $dayarray[array_rand($dayarray)];
                 $hall = Halls::inRandomOrder()->first();
+                if($preferedHall == "No"){
                 $randomHall = $hall['name'];
+                }
+                else{
+                    $randomHall = $preferedHall;
+                }
                 $HallCapacity = $hall['capacity'];
                 $newtime = Carbon::parse($time)->addHour()->format('H:i');
 
@@ -86,7 +94,7 @@ class GeneratorController extends Controller
                 $whereCondition2 = [
                     ['day', $npday],
                     ['time', $nptime],
-                    ['lecture_hall', $nprandomHall ]
+                    ['lecturer', $lecturer ]
                 ];
 
                 $whereCondition3 = [
@@ -95,18 +103,21 @@ class GeneratorController extends Controller
                 ];
                 $whereCondition4 = [
                     ['day', $day],
-                    ['time', $newtime]
+                    ['time', $newtime],
+                    ['lecture_hall', $randomHall]
                 ];
                 $whereCondition5 = [
                     ['day', $npday],
-                    ['time', $randomCourse]
+                    ['time', $nptime],
+                    ['lecture_hall', $nprandomHall]
                 ];
                 $whereCondition6 = [
                     ['day', $npday],
-                    ['time', $npnewtime]
+                    ['time', $npnewtime],
+                    ['lecture_hall', $nprandomHall]
                 ];
             
-            if (DB::table('first_semester')->where($whereCondition)->orWhere($whereCondition1)->orWhere($whereCondition2)->orWhere($whereCondition3)->exists() || $day == $npday || $capacity > $HallCapacity) {
+            if (DB::table('first_semester')->where($whereCondition)->orWhere($whereCondition1)->orWhere($whereCondition3)->exists()) {
                 $clash = false;
             }
             // if(DB::table('first_semester')->where('day', $day)->where('time', $time)->where('lecture_hall',$randomHall['name'])->exists()){   
@@ -125,12 +136,15 @@ class GeneratorController extends Controller
             if($periods >= 2 && DB::table('first_semester')->where($whereCondition4)->exists()){
                 $clash = false;
             }
-            if($periods >= 3 && DB::table('first_semester')->where($whereCondition5)->exists()) {
+            if($periods >= 3 && DB::table('first_semester')->where($whereCondition5)->orWhere($whereCondition2)->exists() || $day == $npday) {
                 $clash = false;
             }
             if($periods == 4 && DB::table('first_semester')->where($whereCondition6)->exists()){
                 $clash = false;
             }
+            // if($loop > 50000 ){
+            //     return back()->with('error', 'Something Went Wrong');
+            // }
             }
             while($clash == false);
             if($periods >= 2){
@@ -181,11 +195,17 @@ class GeneratorController extends Controller
             $capacity = $capacity1 + $capacity2;
             do{
                 $clash = true;
+                $loop++;
 
                 $day = $dayarray[array_rand($dayarray)];
                 $time = $timearray[array_rand($timearray)];
                 $hall = Halls::inRandomOrder()->first();
-                $randomHall = $hall['name'];
+                if($preferedHall == "No"){
+                    $randomHall = $hall['name'];
+                    }
+                    else{
+                        $randomHall = $preferedHall;
+                    }
                 $HallCapacity = $hall['capacity'];
                 $newtime = Carbon::parse($time)->addHour()->format('H:i');
 
@@ -199,65 +219,90 @@ class GeneratorController extends Controller
                 $nprandomHall2 = Halls::inRandomOrder()->first()['name'];
                 $npnewtime2 = Carbon::parse($nptime2)->addHour()->format('H:i');
 
+                //control
                 $whereCondition = [
                     ['day', $day],
                     ['time', $time],
                     ['lecturer', $lecturer ]
                 ];
+
+                //control
                 $whereCondition1 = [
                     ['day', $day],
                     ['time', $time],
                     ['lecture_hall', $randomHall ]
                 ];
+
+                //control
+                $whereCondition3 = [
+                    ['day', $day],
+                    ['course', $randomCourse ],
+                    ['class', $class]
+                ];
+
+                 // second period
+                 $whereCondition4 = [
+                    ['day', $day],
+                    ['time', $newtime],
+                    ['lecture_hall', $randomHall]
+                ];
+
+
+                //Third Period
                 $whereCondition2 = [
                     ['day', $npday1],
                     ['time', $nptime1],
                     ['lecture_hall', $nprandomHall1 ]
                 ];
 
+                //Third Period
                 $whereCondition21 = [
                     ['day', $npday2],
                     ['time', $nptime2],
                     ['lecture_hall', $nprandomHall2 ]
                 ];
 
-                $whereCondition3 = [
-                    ['day', $day],
-                    ['course', $randomCourse ]
-                ];
-                $whereCondition4 = [
-                    ['day', $day],
-                    ['time', $newtime]
-                ];
+               
+                //third period
                 $whereCondition5 = [
                     ['day', $npday1],
-                    ['time', $randomCourse]
+                    ['time', $nptime1],
+                    ['class', $class1]
                 ];
+                
+                //third period
                 $whereCondition52 = [
                     ['day', $npday2],
-                    ['time', $randomCourse]
+                    ['time', $nptime2],
+                    ['class', $class2]
                 ];
+
+                //fourth period
                 $whereCondition6 = [
                     ['day', $npday1],
-                    ['time', $npnewtime1]
+                    ['time', $npnewtime1],
+                    ['lecture_hall', $nprandomHall1]
                 ];
+                //fourth period
                 $whereCondition62 = [
                     ['day', $npday2],
-                    ['time', $npnewtime2]
+                    ['time', $npnewtime2],
+                    ['lecture_hall', $nprandomHall2]
                 ];
-                // || 
-                if (DB::table('first_semester')->where($whereCondition)->orWhere($whereCondition1)->orWhere($whereCondition3)->orWhere($whereCondition4)->exists() || $day == $npday1 || $day == $npday2 || $capacity > $HallCapacity) {
+                
+                if (DB::table('first_semester')->where($whereCondition)->orWhere($whereCondition1)->orWhere($whereCondition3)->exists() || $day == $npday1 || $day == $npday2) {
                     $clash = false;
                 }
-                if($periods >= 2 && DB::table('first_semester')->where($whereCondition2)->orWhere($whereCondition21)->exists()){
+                if($periods >= 2 && DB::table('first_semester')->where($whereCondition2)->orWhere($whereCondition21)->orWhere($whereCondition4)->exists()){
                      $clash = false;
                  }
-                if($periods >= 3 && DB::table('first_semester')->where($whereCondition5)->orWhere($whereCondition52)->exists()) {
+                if($periods >= 3 && DB::table('first_semester')->where($whereCondition5)->orWhere($whereCondition52)->where($whereCondition2)->orWhere($whereCondition21)->exists()) {
                     $clash = false;
                 }
                 if($periods == 4 && DB::table('first_semester')->where($whereCondition6)->orWhere($whereCondition62)->exists()){
                     $clash = false;
                 }
+                
 
 
             }
@@ -378,18 +423,21 @@ class GeneratorController extends Controller
                     ];
                     $whereCondition4 = [
                         ['day', $day],
-                        ['time', $newtime]
+                        ['time', $newtime],
+                        ['lecture_hall', $randomHall]
                     ];
                     $whereCondition5 = [
                         ['day', $npday],
-                        ['time', $randomCourse]
+                        ['time', $randomCourse],
                     ];
                     $whereCondition6 = [
                         ['day', $npday],
-                        ['time', $npnewtime]
+                        ['time', $npnewtime],
+                        ['lecture_hall', $nprandomHall]
+
                     ];
                 
-                if (DB::table('second_semester')->where($whereCondition)->orWhere($whereCondition1)->orWhere($whereCondition2)->orWhere($whereCondition3)->exists() || $day == $npday || $capacity > $HallCapacity) {
+                if (DB::table('second_semester')->where($whereCondition)->orWhere($whereCondition1)->orWhere($whereCondition3)->exists() || $day == $npday) {
                     $clash = false;
                 }
                 // if(DB::table('first_semester')->where('day', $day)->where('time', $time)->where('lecture_hall',$randomHall['name'])->exists()){   
@@ -408,7 +456,7 @@ class GeneratorController extends Controller
                 if($periods >= 2 && DB::table('second_semester')->where($whereCondition4)->exists()){
                     $clash = false;
                 }
-                if($periods >= 3 && DB::table('second_semester')->where($whereCondition5)->exists()) {
+                if($periods >= 3 && DB::table('second_semester')->where($whereCondition5)->orWhere($whereCondition2)->exists()) {
                     $clash = false;
                 }
                 if($periods == 4 && DB::table('second_semester')->where($whereCondition6)->exists()){
@@ -506,36 +554,42 @@ class GeneratorController extends Controller
 
                 $whereCondition3 = [
                     ['day', $day],
-                    ['course', $randomCourse ]
+                    ['course', $randomCourse ],
+                    ['class', $class]
                 ];
                 $whereCondition4 = [
                     ['day', $day],
-                    ['time', $newtime]
+                    ['time', $newtime],
+                    ['lecture_hall', $randomHall]
                 ];
                 $whereCondition5 = [
                     ['day', $npday1],
-                    ['time', $randomCourse]
+                    ['time', $randomCourse],
+                    ['class', $class1]
                 ];
                 $whereCondition52 = [
                     ['day', $npday2],
-                    ['time', $randomCourse]
+                    ['time', $randomCourse],
+                    ['class', $class2]
                 ];
                 $whereCondition6 = [
                     ['day', $npday1],
-                    ['time', $npnewtime1]
+                    ['time', $npnewtime1],
+                    ['lecture_hall', $nprandomHall1]
                 ];
                 $whereCondition62 = [
                     ['day', $npday2],
-                    ['time', $npnewtime2]
+                    ['time', $npnewtime2],
+                    ['lecture_hall', $nprandomHall2]
                 ];
-                // || 
-                if (DB::table('first_semester')->where($whereCondition)->orWhere($whereCondition1)->orWhere($whereCondition3)->orWhere($whereCondition4)->exists() || $day == $npday1 || $day == $npday2 || $capacity > $HallCapacity) {
+                
+                if (DB::table('first_semester')->where($whereCondition)->orWhere($whereCondition1)->exists()) {
                     $clash = false;
                 }
-                if($periods >= 2 && DB::table('first_semester')->where($whereCondition2)->orWhere($whereCondition21)->exists()){
+                if($periods >= 2 && DB::table('first_semester')->where($whereCondition4)->orWhere($whereCondition3)->exists()){
                      $clash = false;
                  }
-                if($periods >= 3 && DB::table('first_semester')->where($whereCondition5)->orWhere($whereCondition52)->exists()) {
+                if($periods >= 3 && DB::table('first_semester')->where($whereCondition2)->orWhere($whereCondition21)->orWhere($whereCondition5)->orWhere($whereCondition52)->exists()) {
                     $clash = false;
                 }
                 if($periods == 4 && DB::table('first_semester')->where($whereCondition6)->orWhere($whereCondition62)->exists()){
