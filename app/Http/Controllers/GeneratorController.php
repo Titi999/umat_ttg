@@ -380,7 +380,7 @@ class GeneratorController extends Controller
         $timearray = ["6:00", "8:00", "10:00", "12:30", "14:30", "16:30"];
         $dayarray = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
         for($i = 0; $i < $coursesNo; $i++)   
-        {  set_time_limit(0);
+        {      set_time_limit(0);
                 $randomCourse = $courses[$i]->name;
                 $periods = $courses[$i]->periods;
                 $lecturer = $courses[$i] -> lecturer;

@@ -8,7 +8,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\GeneratorController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ClassesController;
-use App\Http\Controllers\ExamsController;
+use App\Http\Controllers\ExamsAlgo;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,5 +67,6 @@ Route::group(['middleware'=>['AuthCheck']],function(){
     Route::get('/admin/generator', [GeneratorController::class, 'generator'])->name('admin.generator');
     Route::post('/admin/generateTimetable', [GeneratorController::class, 'generateTimetable'])->name('generateTimetable');
 
-    Route::get('/admin/exams', [ExamsController::class, 'index'])->name('admin.exams');
+    Route::get('/admin/exams', [ExamsAlgo::class, 'index'])->name('admin.exams');
+    Route::post('/admin/generateExams', [ExamsAlgo::class, 'generateExams'])->name('generateExams');
 });

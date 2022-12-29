@@ -91,12 +91,12 @@
     </nav>
     <div class="home-content">
     <div class="addHallsContainer">
-        <div class="main" role="main">
-          <button class="popup-trigger btns" id="popup-trigger">
-            <span>Generate Timetable  <i class='bx bx-loader bx-spin' ></i></span>
-          </button><br><br><br>
-          
-        </div>
+      <div class="main" role="main">
+        <button class="popup-trigger btns" id="popup-trigger">
+          <span>Generate Timetable  <i class='bx bx-loader bx-spin' ></i></span>
+        </button><br><br><br>
+        
+      </div>
         
         <div class="overlay" id="overlay">
           <div class="overlay-background" id="overlay-background"></div>
